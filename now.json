@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "bread",
+  "alias": ["sourdough.now.sh"],
   "builds": [
     {
       "src": "package.json",
