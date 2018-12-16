@@ -3,12 +3,14 @@ import styles from "./App.module.css";
 
 const Input = ({ name, weight, scaleWeight, handleChange }) => (
   <div className={styles.inputWrapper}>
-    <input
-      type="number"
-      value={weight}
-      className={styles.input}
-      onChange={handleChange}
-    />
+    <div>
+      <input
+        type="number"
+        value={weight}
+        className={styles.input}
+        onChange={handleChange}
+      />
+    </div>
     <div className={styles.name}>{name}</div>
     <div className={styles.scaleWeight}>{scaleWeight}g</div>
   </div>

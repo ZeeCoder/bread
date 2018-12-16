@@ -1,6 +1,8 @@
 .root {
   max-width: 500px;
   margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 35px;
 }
 
 .hydration {
@@ -15,20 +17,23 @@
 }
 
 .input {
-  flex: 1 0 0;
+  flex: 1;
   padding: 10px;
   font-size: 20px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .name {
-  flex: 1 0 0;
   text-align: left;
   padding-left: 10px;
+  width: 100px;
 }
 
 .scaleWeight {
-  flex: 1 0 0;
   text-align: right;
+  width: 100px;
 }
 
 .flourInputWrapper {
