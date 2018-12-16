@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styles from "./App.module.css";
+import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
 
 const Input = ({ name, weight, scaleWeight, handleChange }) => (
   <div className={styles.inputWrapper}>
@@ -85,6 +86,7 @@ class App extends Component {
 
     return (
       <div className={styles.root}>
+        <AddToHomeScreen />
         <div className={styles.hydration}>Hydration: {this.getHydration()}</div>
         <button className={styles.addFlourButton} onClick={this.addFlour}>
           Add Flour

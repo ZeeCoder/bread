@@ -1,0 +1,31 @@
+.root {
+  background: #146fb0;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  overflow: hidden;
+}
+
+.addToHome {
+  border: none;
+  background: none;
+  padding: 5px 20px;
+  color: white;
+  font-weight: bold;
+  line-height: 30px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.hide {
+  background: grey;
+  border: none;
+  padding: 5px 20px;
+  color: white;
+  font-weight: bold;
+  line-height: 30px;
+  font-size: 15px;
+  cursor: pointer;
+}
