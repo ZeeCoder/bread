@@ -2,15 +2,26 @@
   max-width: 500px;
   margin: 0 auto;
   padding-left: 15px;
-  padding-right: 35px;
+  padding-right: 15px;
+}
+
+.titleRow {
+  position: relative;
+  margin: 30px 0;
+  display: flex;
 }
 
 .hydration {
-  margin: 30px 0 10px;
+  flex: 1;
+  font-size: 20px;
   font-weight: bold;
 }
 
-.inputWrapper {
+.ingredients {
+  padding-right: 30px;
+}
+
+.ingredient {
   display: flex;
   margin: 15px 0;
   align-items: center;
@@ -18,22 +29,25 @@
 
 .input {
   flex: 1;
-  padding: 10px;
   font-size: 20px;
   display: block;
-  width: 100%;
   box-sizing: border-box;
+  padding: 5px;
+  width: 80px;
 }
 
 .name {
-  text-align: left;
-  padding-left: 10px;
   width: 100px;
+  flex: 1;
+  text-align: right;
+  padding-left: 10px;
+  word-break: break-word;
 }
 
 .scaleWeight {
   text-align: right;
-  width: 100px;
+  font-weight: bold;
+  padding-left: 15px;
 }
 
 .flourInputWrapper {
@@ -45,16 +59,16 @@
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  right: -30px;
+  right: -40px;
   font-weight: bold;
   background: red;
   color: white;
   height: auto;
-  line-height: 20px;
+  line-height: 30px;
   text-align: center;
-  width: 20px;
+  width: 30px;
   border-radius: 4px;
-  font-size: 18px;
+  font-size: 22px;
   cursor: pointer;
 }
 
@@ -62,8 +76,25 @@
   background: green;
   border: none;
   border-radius: 4px;
-  padding: 5px 10px;
   color: white;
   font-weight: bold;
   cursor: pointer;
+  line-height: 40px;
+  padding: 0 15px;
+  font-size: 17px;
+}
+
+@media (min-width: 400px) {
+  .hydration {
+    font-size: 30px;
+  }
+
+  .input {
+    padding: 10px;
+    width: 150px;
+  }
+
+  .addFlourButton {
+    font-size: 20px;
+  }
 }

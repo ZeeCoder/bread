@@ -3,8 +3,8 @@ import styles from "./App.module.css";
 import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
 
 const Input = ({ name, weight, scaleWeight, handleChange }) => (
-  <div className={styles.inputWrapper}>
-    <div>
+  <div className={styles.ingredient}>
+    <div className={styles.inputWrapper}>
       <input
         type="number"
         value={weight}
@@ -87,11 +87,17 @@ class App extends Component {
     return (
       <div className={styles.root}>
         <AddToHomeScreen />
-        <div className={styles.hydration}>Hydration: {this.getHydration()}</div>
-        <button className={styles.addFlourButton} onClick={this.addFlour}>
-          Add Flour
-        </button>
-        <div>
+        <div className={styles.titleRow}>
+          <div className={styles.hydration}>
+            Hydration: {this.getHydration()}
+          </div>
+          <div>
+            <button className={styles.addFlourButton} onClick={this.addFlour}>
+              Add Flour
+            </button>
+          </div>
+        </div>
+        <div className={styles.ingredients}>
           <Input
             name="Starter"
             weight={this.state.starter}

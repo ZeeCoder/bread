@@ -1,31 +1,40 @@
 .root {
   background: #146fb0;
-  border-radius: 5px;
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translate(-50%);
   overflow: hidden;
+  width: 100%;
+  border-radius: 0;
+  display: flex;
 }
 
 .addToHome {
   border: none;
   background: none;
-  padding: 5px 20px;
+  padding: 15px 20px;
   color: white;
   font-weight: bold;
-  line-height: 30px;
-  font-size: 15px;
+  font-size: 18px;
+  line-height: 20px;
   cursor: pointer;
+  flex: 1;
 }
 
 .hide {
   background: grey;
   border: none;
-  padding: 5px 20px;
+  padding: 15px 40px;
   color: white;
   font-weight: bold;
   line-height: 30px;
-  font-size: 15px;
+  font-size: 18px;
   cursor: pointer;
+}
+
+@media (min-width: 400px) {
+  .root {
+    width: 400px;
+  }
 }
