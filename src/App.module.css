@@ -1,8 +1,14 @@
 .root {
-  max-width: 500px;
+}
+
+.menu {
+  height: 50px;
+  background: #86604a;
+}
+
+.app {
+  max-width: 600px;
   margin: 0 auto;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .titleRow {
@@ -18,27 +24,40 @@
 }
 
 .ingredients {
-  padding-right: 30px;
+  width: 100%;
 }
 
 .ingredient {
-  display: flex;
   margin: 15px 0;
   align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.ingredient:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.thInput {
+  width: 80px;
+}
+
+.thButton {
+  width: 50px;
 }
 
 .input {
-  flex: 1;
   font-size: 20px;
   display: block;
   box-sizing: border-box;
   padding: 5px;
-  width: 80px;
+  width: 100%;
+  border: none;
+  margin: 10px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .name {
-  width: 100px;
-  flex: 1;
   text-align: right;
   padding-left: 10px;
   word-break: break-word;
@@ -50,16 +69,16 @@
   padding-left: 15px;
 }
 
+.buttonWrapper {
+  text-align: center;
+}
+
 .flourInputWrapper {
   position: relative;
 }
 
 .removeFlourBtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   border: none;
-  right: -40px;
   font-weight: bold;
   background: red;
   color: white;
@@ -84,13 +103,29 @@
   font-size: 17px;
 }
 
+.contactTitle {
+  text-align: center;
+  margin: 30px 0 20px;
+  font-size: 20px;
+}
+
+.contacts {
+  text-align: center;
+}
+
+.contactButton {
+  display: inline-block;
+  margin: 10px;
+  color: white;
+  font-weight: bold;
+}
+
 @media (min-width: 400px) {
   .hydration {
     font-size: 30px;
   }
 
-  .input {
-    padding: 10px;
+  .thInput {
     width: 150px;
   }
 

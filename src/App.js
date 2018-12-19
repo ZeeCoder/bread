@@ -2,19 +2,20 @@ import React, { Component } from "react";
 import styles from "./App.module.css";
 import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
 
-const Input = ({ name, weight, scaleWeight, handleChange }) => (
-  <div className={styles.ingredient}>
-    <div className={styles.inputWrapper}>
+const Row = ({ name, weight, scaleWeight, handleChange, children }) => (
+  <tr className={styles.ingredient}>
+    <td className={styles.inputWrapper}>
       <input
         type="number"
         value={weight}
         className={styles.input}
         onChange={handleChange}
       />
-    </div>
-    <div className={styles.name}>{name}</div>
-    <div className={styles.scaleWeight}>{scaleWeight}g</div>
-  </div>
+    </td>
+    <td className={styles.name}>{name}</td>
+    <td className={styles.scaleWeight}>{scaleWeight}g</td>
+    <td className={styles.buttonWrapper}>{children}</td>
+  </tr>
 );
 
 class App extends Component {
@@ -86,54 +87,86 @@ class App extends Component {
 
     return (
       <div className={styles.root}>
-        <AddToHomeScreen />
-        <div className={styles.titleRow}>
-          <div className={styles.hydration}>
-            Hydration: {this.getHydration()}
-          </div>
-          <div>
-            <button className={styles.addFlourButton} onClick={this.addFlour}>
-              Add Flour
-            </button>
-          </div>
-        </div>
-        <div className={styles.ingredients}>
-          <Input
-            name="Starter"
-            weight={this.state.starter}
-            scaleWeight={getScaleWeight(this.state.starter)}
-            handleChange={this.handleStarterWeightChange}
-          />
-          {this.state.flours.map(({ name, weight }, index) => (
-            <div key={index} className={styles.flourInputWrapper}>
-              <Input
-                name={name}
-                weight={weight}
-                scaleWeight={getScaleWeight(weight)}
-                handleChange={this.handleFlourWeightChange.bind(this, index)}
-              />
-              {this.state.flours.length > 1 ? (
-                <button
-                  className={styles.removeFlourBtn}
-                  onClick={this.removeFlour.bind(this, index)}
-                >
-                  -
-                </button>
-              ) : null}
+        <div className={styles.menu} />
+
+        <div className={styles.app}>
+          <AddToHomeScreen />
+          <div className={styles.titleRow}>
+            <div className={styles.hydration}>
+              Hydration: {this.getHydration()}
             </div>
-          ))}
-          <Input
-            name="Salt"
-            weight={this.state.salt}
-            scaleWeight={getScaleWeight(this.state.salt)}
-            handleChange={this.handleSaltWeightChange}
-          />
-          <Input
-            name="Water"
-            weight={this.state.water}
-            scaleWeight={getScaleWeight(this.state.water)}
-            handleChange={this.handleWaterWeightChange}
-          />
+            <div>
+              <button className={styles.addFlourButton} onClick={this.addFlour}>
+                Add Flour
+              </button>
+            </div>
+          </div>
+          <table className={styles.ingredients} cellSpacing="0">
+            <thead>
+              <tr>
+                <th className={styles.thInput} />
+                <th />
+                <th />
+                <th className={styles.thButton} />
+              </tr>
+            </thead>
+            <tbody>
+              <Row
+                name="Starter"
+                weight={this.state.starter}
+                scaleWeight={getScaleWeight(this.state.starter)}
+                handleChange={this.handleStarterWeightChange}
+              />
+              {this.state.flours.map(({ name, weight }, index) => (
+                <Row
+                  key={index}
+                  name={name}
+                  weight={weight}
+                  scaleWeight={getScaleWeight(weight)}
+                  handleChange={this.handleFlourWeightChange.bind(this, index)}
+                >
+                  {this.state.flours.length > 1 ? (
+                    <button
+                      className={styles.removeFlourBtn}
+                      onClick={this.removeFlour.bind(this, index)}
+                    >
+                      -
+                    </button>
+                  ) : null}
+                </Row>
+              ))}
+              <Row
+                name="Salt"
+                weight={this.state.salt}
+                scaleWeight={getScaleWeight(this.state.salt)}
+                handleChange={this.handleSaltWeightChange}
+              />
+              <Row
+                name="Water"
+                weight={this.state.water}
+                scaleWeight={getScaleWeight(this.state.water)}
+                handleChange={this.handleWaterWeightChange}
+              />
+            </tbody>
+          </table>
+        </div>
+
+        <h2 className={styles.contactTitle}>Contact Me</h2>
+        <div className={styles.contacts}>
+          <a
+            className={styles.contactButton}
+            href="mailto:rpgmorpheus@gmail.com"
+          >
+            E-mail
+          </a>
+          <a
+            className={styles.contactButton}
+            href="https://twitter.com/zeecoder"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Twitter
+          </a>
         </div>
       </div>
     );
