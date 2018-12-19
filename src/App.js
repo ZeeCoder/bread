@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import styles from "./App.module.css";
 import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
 
-const Row = ({ name, weight, scaleWeight, handleChange, children }) => (
+const Row = ({
+  name,
+  weight,
+  scaleWeight,
+  handleChange,
+  flourWeight,
+  children
+}) => (
   <tr className={styles.ingredient}>
     <td className={styles.inputWrapper}>
       <input
@@ -13,7 +20,10 @@ const Row = ({ name, weight, scaleWeight, handleChange, children }) => (
       />
     </td>
     <td className={styles.name}>{name}</td>
-    <td className={styles.scaleWeight}>{scaleWeight}g</td>
+    <td className={styles.scaleWeight}>
+      {scaleWeight}g
+      {flourWeight ? ` (${parseInt((weight / flourWeight) * 100)}%)` : ""}
+    </td>
     <td className={styles.buttonWrapper}>{children}</td>
   </tr>
 );
@@ -30,10 +40,15 @@ class App extends Component {
     ]
   };
 
-  getHydration() {
-    const flourWeight =
+  getFlourWeight() {
+    return (
       this.state.starter / 2 +
-      this.state.flours.reduce((acc, flour) => acc + flour.weight, 0);
+      this.state.flours.reduce((acc, flour) => acc + flour.weight, 0)
+    );
+  }
+
+  getHydration() {
+    const flourWeight = this.getFlourWeight();
 
     const waterWeight = this.state.water + this.state.starter / 2;
 
@@ -81,8 +96,9 @@ class App extends Component {
     });
 
   render() {
-    let scaleWeight = 0;
+    const flourWeight = this.getFlourWeight();
 
+    let scaleWeight = 0;
     const getScaleWeight = weight => (scaleWeight += weight);
 
     return (
@@ -116,6 +132,7 @@ class App extends Component {
                 weight={this.state.starter}
                 scaleWeight={getScaleWeight(this.state.starter)}
                 handleChange={this.handleStarterWeightChange}
+                flourWeight={flourWeight}
               />
               {this.state.flours.map(({ name, weight }, index) => (
                 <Row
@@ -140,6 +157,7 @@ class App extends Component {
                 weight={this.state.salt}
                 scaleWeight={getScaleWeight(this.state.salt)}
                 handleChange={this.handleSaltWeightChange}
+                flourWeight={flourWeight}
               />
               <Row
                 name="Water"
