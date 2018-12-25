@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styles from "./App.module.css";
 import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
+import Lang from "./Lang/Lang";
+import LanguageProvider from "./LanguageProvider";
 
 const Row = ({
   name,
@@ -128,89 +130,95 @@ class App extends Component {
     const getScaleWeight = weight => (scaleWeight += weight);
 
     return (
-      <div className={styles.root}>
-        <div className={styles.menu} />
+      <LanguageProvider>
+        <div className={styles.root}>
+          <div className={styles.menu} />
 
-        <div className={styles.app}>
-          <AddToHomeScreen />
-          <div className={styles.titleRow}>
-            <button className={styles.addFlourButton} onClick={this.addFlour}>
-              Add Flour
-            </button>
-          </div>
-          <table className={styles.ingredients} cellSpacing="0">
-            <thead>
-              <tr>
-                <th className={styles.thInput} align="left">
-                  Grams
-                </th>
-                <th />
-                <th align="right">Scale</th>
-                <th className={styles.thButton} />
-              </tr>
-            </thead>
-            <tbody>
-              <Row
-                name="Starter"
-                weight={this.state.starter}
-                scaleWeight={getScaleWeight(this.state.starter)}
-                handleChange={this.handleStarterWeightChange}
-                flourWeight={flourWeight}
-              />
-              {this.state.flours.map(({ name, weight }, index) => (
+          <div className={styles.app}>
+            <AddToHomeScreen />
+            <div className={styles.titleRow}>
+              <Lang />
+              <button className={styles.addFlourButton} onClick={this.addFlour}>
+                Add Flour
+              </button>
+            </div>
+            <table className={styles.ingredients} cellSpacing="0">
+              <thead>
+                <tr>
+                  <th className={styles.thInput} align="left">
+                    Grams
+                  </th>
+                  <th />
+                  <th align="right">Scale</th>
+                  <th className={styles.thButton} />
+                </tr>
+              </thead>
+              <tbody>
                 <Row
-                  key={index}
-                  name={name}
-                  weight={weight}
-                  scaleWeight={getScaleWeight(weight)}
-                  handleChange={this.handleFlourWeightChange.bind(this, index)}
-                >
-                  {this.state.flours.length > 1 ? (
-                    <button
-                      className={styles.removeFlourBtn}
-                      onClick={this.removeFlour.bind(this, index)}
-                    >
-                      -
-                    </button>
-                  ) : null}
-                </Row>
-              ))}
-              <Row
-                name="Salt"
-                weight={this.state.salt}
-                scaleWeight={getScaleWeight(this.state.salt)}
-                handleChange={this.handleSaltWeightChange}
-                flourWeight={flourWeight}
-              />
-              <Row
-                name="Water"
-                weight={this.state.water}
-                scaleWeight={getScaleWeight(this.state.water)}
-                handleChange={this.handleWaterWeightChange}
-              />
-              <tr className={styles.ingredient}>{this.renderSummary()}</tr>
-            </tbody>
-          </table>
-        </div>
+                  name="Starter"
+                  weight={this.state.starter}
+                  scaleWeight={getScaleWeight(this.state.starter)}
+                  handleChange={this.handleStarterWeightChange}
+                  flourWeight={flourWeight}
+                />
+                {this.state.flours.map(({ name, weight }, index) => (
+                  <Row
+                    key={index}
+                    name={name}
+                    weight={weight}
+                    scaleWeight={getScaleWeight(weight)}
+                    handleChange={this.handleFlourWeightChange.bind(
+                      this,
+                      index
+                    )}
+                  >
+                    {this.state.flours.length > 1 ? (
+                      <button
+                        className={styles.removeFlourBtn}
+                        onClick={this.removeFlour.bind(this, index)}
+                      >
+                        -
+                      </button>
+                    ) : null}
+                  </Row>
+                ))}
+                <Row
+                  name="Salt"
+                  weight={this.state.salt}
+                  scaleWeight={getScaleWeight(this.state.salt)}
+                  handleChange={this.handleSaltWeightChange}
+                  flourWeight={flourWeight}
+                />
+                <Row
+                  name="Water"
+                  weight={this.state.water}
+                  scaleWeight={getScaleWeight(this.state.water)}
+                  handleChange={this.handleWaterWeightChange}
+                />
+                <tr className={styles.ingredient}>{this.renderSummary()}</tr>
+              </tbody>
+            </table>
+          </div>
 
-        <h2 className={styles.contactTitle}>Contact</h2>
-        <div className={styles.contacts}>
-          <a
-            className={styles.contactButton}
-            href="mailto:rpgmorpheus@gmail.com"
-          >
-            E-mail
-          </a>
-          <a
-            className={styles.contactButton}
-            href="https://twitter.com/zeecoder"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Twitter
-          </a>
+          <h2 className={styles.contactTitle}>Contact</h2>
+          <div className={styles.contacts}>
+            <a
+              className={styles.contactButton}
+              href="mailto:rpgmorpheus@gmail.com"
+            >
+              E-mail
+            </a>
+            <a
+              className={styles.contactButton}
+              href="https://twitter.com/zeecoder"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Twitter
+            </a>
+          </div>
         </div>
-      </div>
+      </LanguageProvider>
     );
   }
 }
