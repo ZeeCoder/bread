@@ -3,6 +3,7 @@ import styles from "./App.module.css";
 import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
 import Lang from "./Lang/Lang";
 import LanguageProvider from "./LanguageProvider";
+import { LanguageContext } from "./language-context";
 
 const Row = ({
   name,
@@ -36,9 +37,9 @@ class App extends Component {
     water: 360,
     starter: 150,
     flours: [
-      { name: "Plain Flour", weight: 375 },
-      { name: "Rye Flour", weight: 75 },
-      { name: "Wholemeal Flour", weight: 75 }
+      { name: "trans|PlainFlour", weight: 375 },
+      { name: "trans|RyeFlour", weight: 75 },
+      { name: "trans|WholemealFlour", weight: 75 }
     ]
   };
 
@@ -109,15 +110,16 @@ class App extends Component {
     return (
       <td colSpan={4} className={styles.summary}>
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>Flour weight:</span>{" "}
+          <span className={styles.summaryLabel}>{this.t.flourWeight}:</span>{" "}
           {flourWeight}g
         </div>
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>Water weight:</span>{" "}
+          <span className={styles.summaryLabel}>{this.t.waterWeight}:</span>{" "}
           {waterWeight}g
         </div>
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>Hydration:</span> {hydration}%
+          <span className={styles.summaryLabel}>{this.t.hydration}:</span>{" "}
+          {hydration}%
         </div>
       </td>
     );
@@ -126,98 +128,112 @@ class App extends Component {
   render() {
     const flourWeight = this.getFlourWeight();
 
-    let scaleWeight = 0;
-    const getScaleWeight = weight => (scaleWeight += weight);
-
     return (
       <LanguageProvider>
-        <div className={styles.root}>
-          <div className={styles.menu} />
+        <LanguageContext.Consumer>
+          {({ trans }) => {
+            // todo surely there's a better way
+            this.t = trans;
+            let scaleWeight = 0;
+            const getScaleWeight = weight => (scaleWeight += weight);
 
-          <div className={styles.app}>
-            <AddToHomeScreen />
-            <div className={styles.titleRow}>
-              <Lang />
-              <button className={styles.addFlourButton} onClick={this.addFlour}>
-                Add Flour
-              </button>
-            </div>
-            <table className={styles.ingredients} cellSpacing="0">
-              <thead>
-                <tr>
-                  <th className={styles.thInput} align="left">
-                    Grams
-                  </th>
-                  <th />
-                  <th align="right">Scale</th>
-                  <th className={styles.thButton} />
-                </tr>
-              </thead>
-              <tbody>
-                <Row
-                  name="Starter"
-                  weight={this.state.starter}
-                  scaleWeight={getScaleWeight(this.state.starter)}
-                  handleChange={this.handleStarterWeightChange}
-                  flourWeight={flourWeight}
-                />
-                {this.state.flours.map(({ name, weight }, index) => (
-                  <Row
-                    key={index}
-                    name={name}
-                    weight={weight}
-                    scaleWeight={getScaleWeight(weight)}
-                    handleChange={this.handleFlourWeightChange.bind(
-                      this,
-                      index
-                    )}
+            return (
+              <div className={styles.root}>
+                <div className={styles.menu} />
+                <div className={styles.app}>
+                  <AddToHomeScreen />
+                  <div className={styles.titleRow}>
+                    <Lang />
+                    <button
+                      className={styles.addFlourButton}
+                      onClick={this.addFlour}
+                    >
+                      {this.t.addFlour}
+                    </button>
+                  </div>
+                  <table className={styles.ingredients} cellSpacing="0">
+                    <thead>
+                      <tr>
+                        <th className={styles.thInput} align="left">
+                          {this.t.weight}
+                        </th>
+                        <th />
+                        <th align="right">{this.t.scale}</th>
+                        <th className={styles.thButton} />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <Row
+                        name={this.t.starter}
+                        weight={this.state.starter}
+                        scaleWeight={getScaleWeight(this.state.starter)}
+                        handleChange={this.handleStarterWeightChange}
+                        flourWeight={flourWeight}
+                      />
+                      {this.state.flours.map(({ name, weight }, index) => (
+                        <Row
+                          key={index}
+                          name={
+                            name.indexOf("trans|") === 0 ? this.t[name] : name
+                          }
+                          weight={weight}
+                          scaleWeight={getScaleWeight(weight)}
+                          handleChange={this.handleFlourWeightChange.bind(
+                            this,
+                            index
+                          )}
+                        >
+                          {this.state.flours.length > 1 ? (
+                            <button
+                              className={styles.removeFlourBtn}
+                              onClick={this.removeFlour.bind(this, index)}
+                            >
+                              -
+                            </button>
+                          ) : null}
+                        </Row>
+                      ))}
+                      <Row
+                        name={this.t.salt}
+                        weight={this.state.salt}
+                        scaleWeight={getScaleWeight(this.state.salt)}
+                        handleChange={this.handleSaltWeightChange}
+                        flourWeight={flourWeight}
+                      />
+                      <Row
+                        name={this.t.water}
+                        weight={this.state.water}
+                        scaleWeight={getScaleWeight(this.state.water)}
+                        handleChange={this.handleWaterWeightChange}
+                      />
+                      <tr className={styles.ingredient}>
+                        {this.renderSummary()}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h2 className={styles.contactTitle}>{this.t.contact}</h2>
+                <div className={styles.contacts}>
+                  <a
+                    className={styles.contactButton}
+                    href="mailto:rpgmorpheus@gmail.com"
                   >
-                    {this.state.flours.length > 1 ? (
-                      <button
-                        className={styles.removeFlourBtn}
-                        onClick={this.removeFlour.bind(this, index)}
-                      >
-                        -
-                      </button>
-                    ) : null}
-                  </Row>
-                ))}
-                <Row
-                  name="Salt"
-                  weight={this.state.salt}
-                  scaleWeight={getScaleWeight(this.state.salt)}
-                  handleChange={this.handleSaltWeightChange}
-                  flourWeight={flourWeight}
-                />
-                <Row
-                  name="Water"
-                  weight={this.state.water}
-                  scaleWeight={getScaleWeight(this.state.water)}
-                  handleChange={this.handleWaterWeightChange}
-                />
-                <tr className={styles.ingredient}>{this.renderSummary()}</tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 className={styles.contactTitle}>Contact</h2>
-          <div className={styles.contacts}>
-            <a
-              className={styles.contactButton}
-              href="mailto:rpgmorpheus@gmail.com"
-            >
-              E-mail
-            </a>
-            <a
-              className={styles.contactButton}
-              href="https://twitter.com/zeecoder"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Twitter
-            </a>
-          </div>
-        </div>
+                    E-mail
+                  </a>
+                  <a
+                    className={styles.contactButton}
+                    href="https://twitter.com/zeecoder"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Twitter
+                  </a>
+                </div>
+              </div>
+            );
+          }}
+        </LanguageContext.Consumer>
       </LanguageProvider>
     );
   }

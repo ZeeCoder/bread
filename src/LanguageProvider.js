@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import localforage from "localforage";
 import { LanguageContext } from "./language-context";
+import translations from "./translations";
 
 const getCurrentLanguage = async () => {
   try {
@@ -20,24 +21,31 @@ class LanguageProvider extends Component {
   constructor(props) {
     super(props);
 
-    const changeLanguage = async language => {
-      this.setState({ language });
-
-      localforage.setItem("language", language).catch(error => {
-        console.error(`Failed to save language selection: ${error}.`);
-      });
-    };
-
     this.state = {
       language: null,
-      changeLanguage
+      changeLanguage: this.changeLanguage,
+      trans: {}
     };
   }
+
+  changeLanguage = async language => {
+    this.setState({
+      language,
+      trans: translations[language]
+    });
+
+    localforage.setItem("language", language).catch(error => {
+      console.error(`Failed to save language selection: ${error}.`);
+    });
+  };
 
   async componentDidMount() {
     const language = await getCurrentLanguage();
 
-    this.setState({ language });
+    this.setState({
+      language,
+      trans: translations[language]
+    });
   }
 
   render() {
