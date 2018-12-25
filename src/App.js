@@ -47,7 +47,7 @@ class App extends Component {
     );
   }
 
-  getHydration() {
+  getSummary() {
     const flourWeight = this.getFlourWeight();
 
     const waterWeight = this.state.water + this.state.starter / 2;
@@ -56,7 +56,13 @@ class App extends Component {
       return "N/A";
     }
 
-    return parseInt((waterWeight / flourWeight) * 100) + "%";
+    const hydration = parseInt((waterWeight / flourWeight) * 100);
+
+    return {
+      hydration,
+      flourWeight,
+      waterWeight
+    };
   }
 
   handleWeightChange = (name, weight) =>
@@ -95,6 +101,26 @@ class App extends Component {
       flours: this.state.flours.concat([{ name: "Flour", weight: 0 }])
     });
 
+  renderSummary() {
+    const { hydration, flourWeight, waterWeight } = this.getSummary();
+
+    return (
+      <td colSpan={4} className={styles.summary}>
+        <div className={styles.summaryRow}>
+          <span className={styles.summaryLabel}>Flour weight:</span>{" "}
+          {flourWeight}g
+        </div>
+        <div className={styles.summaryRow}>
+          <span className={styles.summaryLabel}>Water weight:</span>{" "}
+          {waterWeight}g
+        </div>
+        <div className={styles.summaryRow}>
+          <span className={styles.summaryLabel}>Hydration:</span> {hydration}%
+        </div>
+      </td>
+    );
+  }
+
   render() {
     const flourWeight = this.getFlourWeight();
 
@@ -108,21 +134,18 @@ class App extends Component {
         <div className={styles.app}>
           <AddToHomeScreen />
           <div className={styles.titleRow}>
-            <div className={styles.hydration}>
-              Hydration: {this.getHydration()}
-            </div>
-            <div>
-              <button className={styles.addFlourButton} onClick={this.addFlour}>
-                Add Flour
-              </button>
-            </div>
+            <button className={styles.addFlourButton} onClick={this.addFlour}>
+              Add Flour
+            </button>
           </div>
           <table className={styles.ingredients} cellSpacing="0">
             <thead>
               <tr>
-                <th className={styles.thInput} />
+                <th className={styles.thInput} align="left">
+                  Grams
+                </th>
                 <th />
-                <th />
+                <th align="right">Scale</th>
                 <th className={styles.thButton} />
               </tr>
             </thead>
@@ -165,6 +188,7 @@ class App extends Component {
                 scaleWeight={getScaleWeight(this.state.water)}
                 handleChange={this.handleWaterWeightChange}
               />
+              <tr className={styles.ingredient}>{this.renderSummary()}</tr>
             </tbody>
           </table>
         </div>
