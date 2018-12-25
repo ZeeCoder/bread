@@ -1,11 +1,6 @@
 .root {
 }
 
-.menu {
-  height: 25px;
-  background: #86604a;
-}
-
 .app {
   max-width: 600px;
   margin: 0 auto;

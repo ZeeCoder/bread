@@ -139,7 +139,6 @@ class App extends Component {
 
             return (
               <div className={styles.root}>
-                <div className={styles.menu} />
                 <div className={styles.app}>
                   <AddToHomeScreen />
                   <div className={styles.titleRow}>
