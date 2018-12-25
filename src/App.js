@@ -22,7 +22,7 @@ const Row = ({
     <td className={styles.name}>{name}</td>
     <td className={styles.scaleWeight}>
       {scaleWeight}g
-      {flourWeight ? ` (${parseInt((weight / flourWeight) * 100)}%)` : ""}
+      {flourWeight ? ` (${((weight / flourWeight) * 100).toFixed(2)}%)` : ""}
     </td>
     <td className={styles.buttonWrapper}>{children}</td>
   </tr>
@@ -169,7 +169,7 @@ class App extends Component {
           </table>
         </div>
 
-        <h2 className={styles.contactTitle}>Contact Me</h2>
+        <h2 className={styles.contactTitle}>Contact</h2>
         <div className={styles.contacts}>
           <a
             className={styles.contactButton}
