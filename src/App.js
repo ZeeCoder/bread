@@ -101,7 +101,7 @@ class App extends Component {
 
   addFlour = () =>
     this.setState({
-      flours: this.state.flours.concat([{ name: "Flour", weight: 0 }])
+      flours: this.state.flours.concat([{ name: "trans|Flour", weight: 0 }])
     });
 
   renderSummary() {
