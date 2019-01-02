@@ -176,7 +176,7 @@ class App extends Component {
                             name.indexOf("trans|") === 0 ? this.t[name] : name
                           }
                           weight={weight}
-                          scaleWeight={getScaleWeight(weight)}
+                          scaleWeight={getScaleWeight(weight || 0)}
                           handleChange={this.handleFlourWeightChange.bind(
                             this,
                             index
