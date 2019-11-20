@@ -1,30 +1,23 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import styles from "./Lang.module.css";
 import { LanguageContext } from "../language-context";
 
-class Lang extends Component {
-  handleClick(language, changeLanguage) {
+const Lang = () => {
+  const { language, changeLanguage } = useContext(LanguageContext);
+
+  const handleClick = () => {
     if (language === "en") {
       changeLanguage("hu");
     } else {
       changeLanguage("en");
     }
-  }
+  };
 
-  render() {
-    return (
-      <LanguageContext.Consumer>
-        {({ language, changeLanguage }) => (
-          <div
-            className={styles.root}
-            onClick={() => this.handleClick(language, changeLanguage)}
-          >
-            {language}
-          </div>
-        )}
-      </LanguageContext.Consumer>
-    );
-  }
-}
+  return (
+    <div className={styles.root} onClick={handleClick}>
+      {language}
+    </div>
+  );
+};
 
 export default Lang;

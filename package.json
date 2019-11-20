@@ -1,13 +1,14 @@
 {
   "name": "bread",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "localforage": "^1.7.3",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.2.0",
+    "use-resize-observer": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,8 +38,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "husky": "^1.2.1",
-    "lint-staged": "^8.1.0",
-    "prettier": "^1.15.3"
+    "husky": "^3.1.0",
+    "lint-staged": "^9.4.3",
+    "prettier": "^1.19.1"
   }
 }

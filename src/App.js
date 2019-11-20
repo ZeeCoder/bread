@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./App.module.css";
 import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
 import Lang from "./Lang/Lang";
-import LanguageProvider from "./LanguageProvider";
 import { LanguageContext } from "./language-context";
+import { version } from "../package.json";
 
 const Row = ({
   name,
@@ -31,8 +31,9 @@ const Row = ({
   </tr>
 );
 
-class App extends Component {
-  state = {
+const App = () => {
+  const { trans: t } = useContext(LanguageContext);
+  const [state, setState] = useState({
     salt: 15,
     water: 360,
     starter: 150,
@@ -41,19 +42,16 @@ class App extends Component {
       { name: "trans|RyeFlour", weight: 75 },
       { name: "trans|WholemealFlour", weight: 75 }
     ]
-  };
+  });
 
-  getFlourWeight() {
-    return (
-      this.state.starter / 2 +
-      this.state.flours.reduce((acc, flour) => acc + flour.weight, 0)
-    );
-  }
+  const getFlourWeight = () =>
+    state.starter / 2 +
+    state.flours.reduce((acc, flour) => acc + flour.weight, 0);
 
-  getSummary() {
-    const flourWeight = this.getFlourWeight();
+  const getSummary = () => {
+    const flourWeight = getFlourWeight();
 
-    const waterWeight = this.state.water + this.state.starter / 2;
+    const waterWeight = state.water + state.starter / 2;
 
     if (flourWeight === 0) {
       return "N/A";
@@ -66,176 +64,146 @@ class App extends Component {
       flourWeight,
       waterWeight
     };
-  }
+  };
 
-  handleWeightChange = (name, weight) =>
-    this.setState({ [name]: parseInt(weight) });
-
-  handleWaterWeightChange = ({ target }) =>
-    this.handleWeightChange("water", target.value);
-
-  handleSaltWeightChange = ({ target }) =>
-    this.handleWeightChange("salt", target.value);
-
-  handleStarterWeightChange = ({ target }) =>
-    this.handleWeightChange("starter", target.value);
-
-  handleFlourWeightChange = (index, { target }) => {
+  const handleWeightChange = (name, weight) =>
+    setState({ ...state, [name]: parseInt(weight) });
+  const handleWaterWeightChange = ({ target }) =>
+    handleWeightChange("water", target.value);
+  const handleSaltWeightChange = ({ target }) =>
+    handleWeightChange("salt", target.value);
+  const handleStarterWeightChange = ({ target }) =>
+    handleWeightChange("starter", target.value);
+  const handleFlourWeightChange = (index, { target }) => {
     const flour = {
-      ...this.state.flours[index],
+      ...state.flours[index],
       weight: parseInt(target.value)
     };
 
-    const flours = [...this.state.flours];
+    const flours = [...state.flours];
     flours.splice(index, 1, flour);
 
-    this.setState({ flours });
+    setState({ ...state, flours });
   };
-
-  removeFlour = index => {
-    const flours = [...this.state.flours];
+  const removeFlour = index => {
+    const flours = [...state.flours];
 
     flours.splice(index, 1);
-    this.setState({ flours });
+    setState({ ...state, flours });
   };
 
-  addFlour = () =>
-    this.setState({
-      flours: this.state.flours.concat([{ name: "trans|Flour", weight: 0 }])
+  const addFlour = () =>
+    setState({
+      ...state,
+      flours: state.flours.concat([{ name: "trans|Flour", weight: 0 }])
     });
 
-  renderSummary() {
-    const { hydration, flourWeight, waterWeight } = this.getSummary();
+  const renderSummary = () => {
+    const { hydration, waterWeight, flourWeight } = getSummary();
 
     return (
       <td colSpan={4} className={styles.summary}>
-        <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>{this.t.flourWeight}:</span>{" "}
-          {flourWeight}g
+        <div className={styles.hydrationBar}>
+          <div
+            className={styles.hydrationBarWater}
+            style={{ width: `${hydration}%` }}
+          />
+          <div className={styles.hydrationBarLabel}>{hydration}%</div>
         </div>
+
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>{this.t.waterWeight}:</span>{" "}
-          {waterWeight}g
-        </div>
-        <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>{this.t.hydration}:</span>{" "}
-          {hydration}%
+          <div className={styles.summaryLabel}>
+            <b>{t.water}:</b> {waterWeight}g
+          </div>
+          <div
+            className={[styles.summaryLabel, styles.summaryLabelRight].join(
+              " "
+            )}
+          >
+            <b>{t.flour}:</b> {flourWeight}g
+          </div>
         </div>
       </td>
     );
-  }
+  };
 
-  render() {
-    const flourWeight = this.getFlourWeight();
+  const flourWeight = getFlourWeight();
 
-    return (
-      <LanguageProvider>
-        <LanguageContext.Consumer>
-          {({ trans }) => {
-            // todo surely there's a better way
-            this.t = trans;
-            let scaleWeight = 0;
-            const getScaleWeight = weight => (scaleWeight += weight);
+  let scaleWeight = 0;
+  const getScaleWeight = weight => (scaleWeight += weight);
 
-            return (
-              <div className={styles.root}>
-                <div className={styles.app}>
-                  <AddToHomeScreen />
-                  <div className={styles.titleRow}>
-                    <Lang />
-                    <button
-                      className={styles.addFlourButton}
-                      onClick={this.addFlour}
-                    >
-                      {this.t.addFlour}
-                    </button>
-                  </div>
-                  <table className={styles.ingredients} cellSpacing="0">
-                    <thead>
-                      <tr>
-                        <th className={styles.thInput} align="left">
-                          {this.t.weight}
-                        </th>
-                        <th />
-                        <th align="right">{this.t.scale}</th>
-                        <th className={styles.thButton} />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <Row
-                        name={this.t.starter}
-                        weight={this.state.starter}
-                        scaleWeight={getScaleWeight(this.state.starter)}
-                        handleChange={this.handleStarterWeightChange}
-                        flourWeight={flourWeight}
-                      />
-                      {this.state.flours.map(({ name, weight }, index) => (
-                        <Row
-                          key={index}
-                          name={
-                            name.indexOf("trans|") === 0 ? this.t[name] : name
-                          }
-                          weight={weight}
-                          scaleWeight={getScaleWeight(weight || 0)}
-                          handleChange={this.handleFlourWeightChange.bind(
-                            this,
-                            index
-                          )}
-                        >
-                          {this.state.flours.length > 1 ? (
-                            <button
-                              className={styles.removeFlourBtn}
-                              onClick={this.removeFlour.bind(this, index)}
-                            >
-                              -
-                            </button>
-                          ) : null}
-                        </Row>
-                      ))}
-                      <Row
-                        name={this.t.salt}
-                        weight={this.state.salt}
-                        scaleWeight={getScaleWeight(this.state.salt)}
-                        handleChange={this.handleSaltWeightChange}
-                        flourWeight={flourWeight}
-                      />
-                      <Row
-                        name={this.t.water}
-                        weight={this.state.water}
-                        scaleWeight={getScaleWeight(this.state.water)}
-                        handleChange={this.handleWaterWeightChange}
-                      />
-                      <tr className={styles.ingredient}>
-                        {this.renderSummary()}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <h2 className={styles.contactTitle}>{this.t.contact}</h2>
-                <div className={styles.contacts}>
-                  <a
-                    className={styles.contactButton}
-                    href="mailto:rpgmorpheus@gmail.com"
+  return (
+    <div className={styles.root}>
+      <div className={styles.app}>
+        <AddToHomeScreen />
+        <div className={styles.titleRow}>
+          <Lang />
+          <button className={styles.addFlourButton} onClick={addFlour}>
+            {t.addFlour}
+          </button>
+        </div>
+        <table className={styles.ingredients} cellSpacing="0">
+          <tbody>
+            <Row
+              name={t.starter}
+              weight={state.starter}
+              scaleWeight={getScaleWeight(state.starter)}
+              handleChange={handleStarterWeightChange}
+              flourWeight={flourWeight}
+            />
+            {state.flours.map(({ name, weight }, index) => (
+              <Row
+                key={index}
+                name={name.indexOf("trans|") === 0 ? t[name] : name}
+                weight={weight}
+                scaleWeight={getScaleWeight(weight || 0)}
+                handleChange={handleFlourWeightChange}
+              >
+                {state.flours.length > 1 ? (
+                  <button
+                    className={styles.removeFlourBtn}
+                    onClick={removeFlour}
                   >
-                    E-mail
-                  </a>
-                  <a
-                    className={styles.contactButton}
-                    href="https://twitter.com/zeecoder"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Twitter
-                  </a>
-                </div>
-              </div>
-            );
-          }}
-        </LanguageContext.Consumer>
-      </LanguageProvider>
-    );
-  }
-}
+                    -
+                  </button>
+                ) : null}
+              </Row>
+            ))}
+            <Row
+              name={t.salt}
+              weight={state.salt}
+              scaleWeight={getScaleWeight(state.salt)}
+              handleChange={handleSaltWeightChange}
+              flourWeight={flourWeight}
+            />
+            <Row
+              name={t.water}
+              weight={state.water}
+              scaleWeight={getScaleWeight(state.water)}
+              handleChange={handleWaterWeightChange}
+            />
+            <tr className={styles.ingredient}>{renderSummary()}</tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className={styles.version}>v{version}</div>
+      <h2 className={styles.contactTitle}>{t.contact}</h2>
+      <div className={styles.contacts}>
+        <a className={styles.contactButton} href="mailto:rpgmorpheus@gmail.com">
+          E-mail
+        </a>
+        <a
+          className={styles.contactButton}
+          href="https://twitter.com/zeecoder"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Twitter
+        </a>
+      </div>
+    </div>
+  );
+};
 
 export default App;

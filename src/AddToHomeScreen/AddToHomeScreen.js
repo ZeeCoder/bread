@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "./AddToHomeScreen.module.css";
+import { LanguageContext } from "../language-context";
 
 /**
  * Showing add to homescreen button for the user as soon as possible
@@ -7,49 +8,42 @@ import styles from "./AddToHomeScreen.module.css";
  * @see https://www.youtube.com/watch?v=msA284Q6yZU&t=161s&list=WL&index=10
  * @see https://love2dev.com/blog/beforeinstallprompt/
  */
-class AddToHomeScreen extends Component {
-  state = {
-    installPromptEvent: null
-  };
+const AddToHomeScreen = () => {
+  const { trans } = useContext(LanguageContext);
+  const [event, setEvent] = useState(null);
 
-  componentDidMount() {
-    window.addEventListener(
-      "beforeinstallprompt",
-      this.handleBeforeInstallPrompt
-    );
+  useEffect(() => {
+    const handleBeforeInstallPrompt = event => {
+      event.preventDefault();
+      setEvent(event);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () =>
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+  }, []);
+
+  if (!event) {
+    return null;
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("beforeinstallprompt");
-  }
+  const handlePrompt = () => event.prompt();
+  const handleHide = () => setEvent(null);
 
-  handleBeforeInstallPrompt = event => {
-    event.preventDefault();
-    this.setState({ installPromptEvent: event });
-  };
-
-  handleAddToHome = () => {
-    this.state.installPromptEvent.prompt();
-  };
-
-  handleHide = () => this.setState({ installPromptEvent: null });
-
-  render() {
-    if (!this.state.installPromptEvent) {
-      return null;
-    }
-
-    return (
-      <div className={styles.root}>
-        <button className={styles.addToHome} onClick={this.handleAddToHome}>
-          Add To Home Screen
-        </button>
-        <button className={styles.hide} onClick={this.handleHide}>
-          Hide
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={styles.root}>
+      <button className={styles.addToHome} onClick={handlePrompt}>
+        {trans.addToHome}
+      </button>
+      <button className={styles.hide} onClick={handleHide}>
+        {trans.hideAddToHome}
+      </button>
+    </div>
+  );
+};
 
 export default AddToHomeScreen;

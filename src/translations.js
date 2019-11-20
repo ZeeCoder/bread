@@ -4,8 +4,6 @@ export default {
     hydration: "Hydration",
     flourWeight: "Flour weight",
     waterWeight: "Water weight",
-    weight: "Weight",
-    scale: "Scale",
     starter: "Starter",
     "trans|Flour": "Flour",
     "trans|PlainFlour": "Plain Flour",
@@ -13,15 +11,16 @@ export default {
     "trans|WholemealFlour": "Wholemeal Flour",
     salt: "Salt",
     water: "Water",
-    contact: "Contact"
+    flour: "Flour",
+    contact: "Contact",
+    addToHome: "Add to Home Screen",
+    hideAddToHome: "Hide"
   },
   hu: {
     addFlour: "Több Liszt",
     hydration: "Hidratáció",
     flourWeight: "Liszt Súly",
     waterWeight: "Víz Súly",
-    weight: "Súly",
-    scale: "Mérleg",
     starter: "Kovász",
     "trans|Flour": "Liszt",
     "trans|PlainFlour": "Finomliszt",
@@ -29,6 +28,9 @@ export default {
     "trans|WholemealFlour": "Teljeskiőrlésű Liszt",
     salt: "Só",
     water: "Víz",
-    contact: "Kapcsolat"
+    flour: "Liszt",
+    contact: "Kapcsolat",
+    addToHome: "Add to Home Screen",
+    hideAddToHome: "Hide"
   }
 };
