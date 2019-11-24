@@ -17,6 +17,9 @@
 
 .version {
   text-align: center;
+  opacity: 0.4;
+  color: #444;
+  margin-top: 10px;
 }
 
 .contactTitle {

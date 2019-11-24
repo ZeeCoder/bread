@@ -67,32 +67,41 @@
   text-align: center;
 }
 
-.removeBtn {
+.btn {
   border: none;
   font-weight: bold;
-  background: red;
   color: white;
   height: auto;
   line-height: 30px;
   text-align: center;
-  width: 30px;
   border-radius: 4px;
   font-size: 22px;
   cursor: pointer;
 }
 
-.addBtn {
-  border: none;
-  font-weight: bold;
+.toolbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.multipliers {
+  flex: 1;
+  text-align: left;
+}
+
+.btnRemove {
+  background: red;
+}
+
+.btnAdd {
   background: green;
-  color: white;
-  height: auto;
-  line-height: 30px;
-  text-align: center;
-  width: 30px;
-  border-radius: 4px;
-  font-size: 22px;
-  cursor: pointer;
+}
+
+.btnMultiply {
+  background: #4d98e8;
+  font-size: 16px;
+  margin: 4px;
 }
 
 .summary {

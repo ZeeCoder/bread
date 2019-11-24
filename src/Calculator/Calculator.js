@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 import { LanguageContext } from "../language-context";
 import nanoid from "nanoid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faMinus,
+  faTimes,
+  faDivide
+} from "@fortawesome/free-solid-svg-icons";
 
 export const TYPE__SALT = "salt";
 export const TYPE__WATER = "water";
@@ -63,6 +68,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         ingredients: [...state.ingredients, payload.ingredient]
+      };
+    case "multiply":
+      return {
+        ...state,
+        ingredients: state.ingredients.map(ingredient => ({
+          ...ingredient,
+          flourWeight: ingredient.flourWeight * payload.multiplier,
+          waterWeight: ingredient.waterWeight * payload.multiplier,
+          saltWeight: ingredient.saltWeight * payload.multiplier
+        }))
       };
     default:
       console.error("unrecognised action");
@@ -210,7 +225,7 @@ const Calculator = ({ recipe: loadedRecipe }) => {
               if (ingredient.type === TYPE__FLOUR) {
                 return (
                   <button
-                    className={styles.removeBtn}
+                    className={`${styles.btn} ${styles.btnRemove}`}
                     onClick={() =>
                       dispatch({
                         type: "removeIngredient",
@@ -229,27 +244,78 @@ const Calculator = ({ recipe: loadedRecipe }) => {
         )}
         <tr className={styles.ingredient}>
           <td colSpan={4} className={styles.ingredientEmpty}>
-            <button
-              className={styles.addBtn}
-              onClick={() => {
-                // todo support adding with label and different types on top of flour
-                dispatch({
-                  type: "addIngredient",
-                  ingredient: {
-                    type: TYPE__FLOUR,
-                    key: nanoid(5),
-                    order: ingredients[ingredients.length - 1].order + 1,
-                    flourWeight: 0,
-                    waterWeight: 0,
-                    saltWeight: 0,
-                    label: "flour",
-                    translateLabel: true
+            <div className={styles.toolbar}>
+              <div className={styles.multipliers}>
+                <button
+                  className={`${styles.btn} ${styles.btnMultiply}`}
+                  onClick={() =>
+                    dispatch({
+                      type: "multiply",
+                      multiplier: 0.25
+                    })
                   }
-                });
-              }}
-            >
-              <FontAwesomeIcon icon={faPlus} size="xs" />
-            </button>
+                >
+                  <FontAwesomeIcon icon={faDivide} size="xs" />4
+                </button>
+                <button
+                  className={`${styles.btn} ${styles.btnMultiply}`}
+                  onClick={() =>
+                    dispatch({
+                      type: "multiply",
+                      multiplier: 0.5
+                    })
+                  }
+                >
+                  <FontAwesomeIcon icon={faDivide} size="xs" />2
+                </button>
+                <button
+                  className={`${styles.btn} ${styles.btnMultiply}`}
+                  onClick={() =>
+                    dispatch({
+                      type: "multiply",
+                      multiplier: 1.5
+                    })
+                  }
+                >
+                  <FontAwesomeIcon icon={faTimes} size="xs" />
+                  1.5
+                </button>
+                <button
+                  className={`${styles.btn} ${styles.btnMultiply}`}
+                  onClick={() =>
+                    dispatch({
+                      type: "multiply",
+                      multiplier: 2
+                    })
+                  }
+                >
+                  <FontAwesomeIcon icon={faTimes} size="xs" />2
+                </button>
+              </div>
+              <div>
+                <button
+                  className={`${styles.btn} ${styles.btnAdd}`}
+                  onClick={() => {
+                    // todo support adding with label and different types on top of flour
+                    dispatch({
+                      type: "addIngredient",
+                      ingredient: {
+                        type: TYPE__FLOUR,
+                        key: nanoid(5),
+                        order: ingredients[ingredients.length - 1].order + 1,
+                        flourWeight: 0,
+                        waterWeight: 0,
+                        saltWeight: 0,
+                        label: "flour",
+                        translateLabel: true
+                      }
+                    });
+                  }}
+                >
+                  <FontAwesomeIcon icon={faPlus} size="xs" />
+                </button>
+              </div>
+            </div>
           </td>
         </tr>
         <tr className={styles.summary}>{renderSummary()}</tr>
