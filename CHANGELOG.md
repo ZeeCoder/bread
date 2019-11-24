@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.7
+
+- Test bump to see changes
+
 ## 1.1.6
 
 - Test bump to see changes
