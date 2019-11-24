@@ -3,6 +3,8 @@ import styles from "./Calculator.module.css";
 import PropTypes from "prop-types";
 import { LanguageContext } from "../language-context";
 import nanoid from "nanoid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 export const TYPE__SALT = "salt";
 export const TYPE__WATER = "water";
@@ -216,7 +218,7 @@ const Calculator = ({ recipe: loadedRecipe }) => {
                       })
                     }
                   >
-                    -
+                    <FontAwesomeIcon icon={faMinus} size="xs" />
                   </button>
                 );
               }
@@ -246,7 +248,7 @@ const Calculator = ({ recipe: loadedRecipe }) => {
                 });
               }}
             >
-              +
+              <FontAwesomeIcon icon={faPlus} size="xs" />
             </button>
           </td>
         </tr>

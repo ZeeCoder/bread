@@ -13,7 +13,10 @@ export default {
     wholemealFlour: "Wholemeal Flour",
     contact: "Contact",
     addToHome: "Add to Home Screen",
-    hideAddToHome: "Hide"
+    hideAddToHome: "Hide",
+    appInstalled: "This app is now available offline.",
+    appUpdated:
+      "A new app version was installed. Close all running instances and reopen the app to receive it."
   },
   hu: {
     addFlour: "Több Liszt",
@@ -29,6 +32,9 @@ export default {
     wholemealFlour: "Teljeskiőrlésű Liszt",
     contact: "Kapcsolat",
     addToHome: "Hozzáadás a Kezdőképernyőhöz",
-    hideAddToHome: "Elrejtés"
+    hideAddToHome: "Elrejtés",
+    appInstalled: "Az app offline is elérhetővé vált.",
+    appUpdated:
+      "Új verzió lett telepítve. A megtekintéshez zárd be az összes futó példányt, majd indítsd újra az appot."
   }
 };

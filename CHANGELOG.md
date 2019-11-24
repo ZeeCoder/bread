@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.3
+
+- Added a version notifier to the UI
+
 ## 1.1.2
 
 - Internal refactor to prepare the calculator for loading recipes

@@ -1,0 +1,30 @@
+.root {
+  width: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  left: 50%;
+  max-width: 400px;
+  top: 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-100%);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out,
+    background 0.2s ease-out;
+  cursor: pointer;
+}
+
+.root:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.icon {
+  margin-left: 5px;
+  color: green;
+}

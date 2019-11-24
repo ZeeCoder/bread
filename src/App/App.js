@@ -6,6 +6,7 @@ import { LanguageContext } from "../language-context";
 import PackageJSON from "../../package.json";
 import Calculator from "../Calculator/Calculator";
 import DefaultRecipe from "../DefaultRecipe";
+import SW from "../ServiceWorker/SW";
 
 const { version } = PackageJSON;
 
@@ -14,6 +15,7 @@ const App = () => {
 
   return (
     <div className={styles.root}>
+      <SW />
       <div className={styles.app}>
         <AddToHomeScreen />
         <div className={styles.titleRow}>
