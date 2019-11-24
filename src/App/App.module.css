@@ -1,0 +1,50 @@
+.root {
+  position: relative;
+  font-family: sans-serif;
+  padding: 10px 0;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.titleRow {
+  margin: 20px 0;
+  padding: 0 10px;
+  text-align: right;
+}
+
+.version {
+  text-align: center;
+}
+
+.contactTitle {
+  text-align: center;
+  margin: 40px 0 5px;
+  font-size: 20px;
+}
+
+.contacts {
+  text-align: center;
+}
+
+.contactButton {
+  display: inline-block;
+  margin: 10px;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+@media (min-width: 400px) {
+  .thInput {
+    width: 150px;
+  }
+}
+
+@media (min-width: 620px) {
+  .titleRow {
+    padding: 0;
+  }
+}

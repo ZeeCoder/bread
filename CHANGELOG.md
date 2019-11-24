@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.2
+
+- Internal refactor to prepare the calculator for loading recipes
+- UI changes due to the refactor
+
 ## 1.1.1
 
 - hotfix for inputs after the hooks refactor

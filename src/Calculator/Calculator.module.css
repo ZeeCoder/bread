@@ -1,0 +1,136 @@
+.root {
+  width: 100%;
+}
+
+.summary {
+  background: rgba(0, 0, 0, 0.1);
+  border-top: 2px solid;
+}
+
+.ingredient {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.ingredientEmpty {
+  text-align: right;
+  padding: 10px;
+}
+
+.ingredient td:first-child {
+  width: 100px;
+}
+
+.ingredient td:last-child {
+  width: 40px;
+}
+
+.ingredient:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.input {
+  font-size: 20px;
+  display: block;
+  box-sizing: border-box;
+  padding: 5px;
+  padding-left: 10px;
+  width: 100%;
+  border: none;
+  margin: 10px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.label {
+  text-align: right;
+  padding-left: 10px;
+  word-break: break-word;
+  font-weight: bold;
+}
+
+.scaleWeight {
+  text-align: right;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 5px;
+}
+
+.weightPercentage {
+  font-size: 14px;
+  font-style: italic;
+  margin-left: 10px;
+  opacity: 0.5;
+}
+
+.buttonWrapper {
+  text-align: center;
+}
+
+.removeBtn {
+  border: none;
+  font-weight: bold;
+  background: red;
+  color: white;
+  height: auto;
+  line-height: 30px;
+  text-align: center;
+  width: 30px;
+  border-radius: 4px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.addBtn {
+  border: none;
+  font-weight: bold;
+  background: green;
+  color: white;
+  height: auto;
+  line-height: 30px;
+  text-align: center;
+  width: 30px;
+  border-radius: 4px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.summary {
+  line-height: 25px;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.summaryRow {
+  display: flex;
+}
+
+.summaryLabel {
+  flex: 1;
+}
+
+.summaryLabelRight {
+  text-align: right;
+}
+
+.hydrationBar {
+  height: 30px;
+  background: #e8bf84;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.hydrationBarWater {
+  background: #669be8;
+  height: 100%;
+  max-width: 100%;
+}
+
+.hydrationBarLabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-weight: bold;
+}
