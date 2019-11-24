@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styles from "./App.module.css";
 import AddToHomeScreen from "../AddToHomeScreen/AddToHomeScreen";
 import Lang from "../Lang/Lang";

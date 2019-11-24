@@ -78,16 +78,7 @@ const Calculator = ({ recipe: loadedRecipe }) => {
     handleChange,
     renderButton
   }) => {
-    const {
-      type,
-      key,
-      flourWeight,
-      waterWeight,
-      saltWeight,
-      label,
-      translateLabel
-    } = ingredient;
-
+    const { key, label, translateLabel } = ingredient;
     const weight = getIngredientWeight(ingredient);
 
     return (
