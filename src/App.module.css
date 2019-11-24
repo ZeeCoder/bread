@@ -1,6 +1,7 @@
 .root {
   position: relative;
   font-family: sans-serif;
+  padding: 10px 0;
 }
 
 .app {
@@ -9,7 +10,7 @@
 }
 
 .titleRow {
-  margin: 30px 0;
+  margin: 20px 0;
   padding: 0 10px;
   text-align: right;
 }
@@ -134,9 +135,7 @@
 }
 
 .version {
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
+  text-align: center;
 }
 
 .contactTitle {

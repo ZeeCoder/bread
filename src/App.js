@@ -3,7 +3,9 @@ import styles from "./App.module.css";
 import AddToHomeScreen from "./AddToHomeScreen/AddToHomeScreen";
 import Lang from "./Lang/Lang";
 import { LanguageContext } from "./language-context";
-import { version } from "../package.json";
+import PackageJSON from "../package.json";
+
+const { version } = PackageJSON;
 
 const Row = ({
   name,
@@ -31,6 +33,16 @@ const Row = ({
   </tr>
 );
 
+const cleanInputValue = value => {
+  const number = parseInt(value);
+
+  if (isNaN(number)) {
+    return "";
+  }
+
+  return number;
+};
+
 const App = () => {
   const { trans: t } = useContext(LanguageContext);
   const [state, setState] = useState({
@@ -46,7 +58,7 @@ const App = () => {
 
   const getFlourWeight = () =>
     state.starter / 2 +
-    state.flours.reduce((acc, flour) => acc + flour.weight, 0);
+    state.flours.reduce((acc, flour) => acc + (parseInt(flour.weight) || 0), 0);
 
   const getSummary = () => {
     const flourWeight = getFlourWeight();
@@ -54,7 +66,7 @@ const App = () => {
     const waterWeight = state.water + state.starter / 2;
 
     if (flourWeight === 0) {
-      return "N/A";
+      return "?";
     }
 
     const hydration = parseInt((waterWeight / flourWeight) * 100);
@@ -67,7 +79,7 @@ const App = () => {
   };
 
   const handleWeightChange = (name, weight) =>
-    setState({ ...state, [name]: parseInt(weight) });
+    setState({ ...state, [name]: cleanInputValue(weight) });
   const handleWaterWeightChange = ({ target }) =>
     handleWeightChange("water", target.value);
   const handleSaltWeightChange = ({ target }) =>
@@ -77,7 +89,7 @@ const App = () => {
   const handleFlourWeightChange = (index, { target }) => {
     const flour = {
       ...state.flours[index],
-      weight: parseInt(target.value)
+      weight: cleanInputValue(target.value)
     };
 
     const flours = [...state.flours];
@@ -108,7 +120,9 @@ const App = () => {
             className={styles.hydrationBarWater}
             style={{ width: `${hydration}%` }}
           />
-          <div className={styles.hydrationBarLabel}>{hydration}%</div>
+          <div className={styles.hydrationBarLabel}>
+            {hydration > 100 ? ">100" : hydration}%
+          </div>
         </div>
 
         <div className={styles.summaryRow}>
@@ -157,12 +171,12 @@ const App = () => {
                 name={name.indexOf("trans|") === 0 ? t[name] : name}
                 weight={weight}
                 scaleWeight={getScaleWeight(weight || 0)}
-                handleChange={handleFlourWeightChange}
+                handleChange={event => handleFlourWeightChange(index, event)}
               >
                 {state.flours.length > 1 ? (
                   <button
                     className={styles.removeFlourBtn}
-                    onClick={removeFlour}
+                    onClick={() => removeFlour(index)}
                   >
                     -
                   </button>
@@ -187,7 +201,6 @@ const App = () => {
         </table>
       </div>
 
-      <div className={styles.version}>v{version}</div>
       <h2 className={styles.contactTitle}>{t.contact}</h2>
       <div className={styles.contacts}>
         <a className={styles.contactButton} href="mailto:rpgmorpheus@gmail.com">
@@ -202,6 +215,7 @@ const App = () => {
           Twitter
         </a>
       </div>
+      <div className={styles.version}>v{version}</div>
     </div>
   );
 };

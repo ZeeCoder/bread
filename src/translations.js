@@ -30,7 +30,7 @@ export default {
     water: "Víz",
     flour: "Liszt",
     contact: "Kapcsolat",
-    addToHome: "Add to Home Screen",
-    hideAddToHome: "Hide"
+    addToHome: "Hozzáadás a Kezdőképernyőhöz",
+    hideAddToHome: "Elrejtés"
   }
 };
