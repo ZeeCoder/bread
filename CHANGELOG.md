@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 1.1.10
+
+- Fixed the starter input so that it can have both even and odd values.
+- Inputs can no longer have negative values.
+- Division will no longer produce floating numbers behind the scenes.
+- Inputs no longer keep a leading 0 when the input value is deleted, and then
+  replaced with something else.
+
 ## 1.1.9
 
 - Added multipliers

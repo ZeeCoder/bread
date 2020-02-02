@@ -32,10 +32,10 @@ const cleanInputValue = value => {
   const number = parseInt(value);
 
   if (isNaN(number)) {
-    return "";
+    return 0;
   }
 
-  return number;
+  return number > 0 ? number : 0;
 };
 
 const reducer = (state, action) => {
@@ -72,12 +72,41 @@ const reducer = (state, action) => {
     case "multiply":
       return {
         ...state,
-        ingredients: state.ingredients.map(ingredient => ({
-          ...ingredient,
-          flourWeight: ingredient.flourWeight * payload.multiplier,
-          waterWeight: ingredient.waterWeight * payload.multiplier,
-          saltWeight: ingredient.saltWeight * payload.multiplier
-        }))
+        ingredients: state.ingredients.map(ingredient => {
+          let changeset = {};
+          if (ingredient.type === TYPE__SALT) {
+            changeset = {
+              saltWeight: Math.round(ingredient.saltWeight * payload.multiplier)
+            };
+          } else if (ingredient.type === TYPE__STARTER) {
+            changeset = {
+              flourWeight: Math.floor(
+                ingredient.flourWeight * payload.multiplier
+              ),
+              waterWeight: Math.ceil(
+                ingredient.waterWeight * payload.multiplier
+              )
+            };
+          } else if (ingredient.type === TYPE__FLOUR) {
+            changeset = {
+              flourWeight: Math.round(
+                ingredient.flourWeight * payload.multiplier
+              )
+            };
+          } else {
+            // water
+            changeset = {
+              waterWeight: Math.round(
+                ingredient.waterWeight * payload.multiplier
+              )
+            };
+          }
+
+          return {
+            ...ingredient,
+            ...changeset
+          };
+        })
       };
     default:
       console.error("unrecognised action");
@@ -103,7 +132,7 @@ const Calculator = ({ recipe: loadedRecipe }) => {
         <td>
           <input
             type="number"
-            value={weight}
+            value={weight || ""}
             className={styles.input}
             onChange={handleChange}
           />
@@ -208,9 +237,12 @@ const Calculator = ({ recipe: loadedRecipe }) => {
 
               if (type === TYPE__STARTER) {
                 // todo update the below lines when starter hydration can be changed
+                const flourWeight = Math.floor(value / 2);
+                const waterWeight = Math.ceil(value / 2);
+
                 dispatchChangeSet({
-                  flourWeight: value / 2,
-                  waterWeight: value / 2
+                  flourWeight,
+                  waterWeight
                 });
               } else if (type === TYPE__SALT) {
                 dispatchChangeSet({ saltWeight: value });
