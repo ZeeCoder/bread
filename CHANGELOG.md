@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.11
+
+- Refactored in TypeScript and Emotion.
+- Removed the AddToHome button as browsers have removed support for it: https://github.com/w3c/manifest/pull/836
+
 ## 1.1.10
 
 - Fixed the starter input so that it can have both even and odd values.

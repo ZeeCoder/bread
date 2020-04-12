@@ -1,4 +1,4 @@
-export default {
+const translations: Record<string, Record<string, string>> = {
   en: {
     addFlour: "Add Flour",
     hydration: "Hydration",
@@ -38,3 +38,5 @@ export default {
       "Új verzió lett telepítve. A megtekintéshez zárd be az összes futó példányt, majd indítsd újra az appot."
   }
 };
+
+export default translations;

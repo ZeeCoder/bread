@@ -1,6 +1,19 @@
 import React, { useContext } from "react";
-import styles from "./Lang.module.css";
+import styled from "@emotion/styled/macro";
 import { LanguageContext } from "../language-context";
+
+const StyledLang = styled("div")`
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: green;
+  color: white;
+  padding: 0 10px;
+  border-radius: 4px;
+  line-height: 40px;
+  width: 30px;
+`;
 
 const Lang = () => {
   const { language, changeLanguage } = useContext(LanguageContext);
@@ -13,11 +26,7 @@ const Lang = () => {
     }
   };
 
-  return (
-    <div className={styles.root} onClick={handleClick}>
-      {language}
-    </div>
-  );
+  return <StyledLang onClick={handleClick}>{language}</StyledLang>;
 };
 
 export default Lang;
